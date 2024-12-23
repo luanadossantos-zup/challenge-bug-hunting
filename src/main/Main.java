@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        String titulo, descricao;
+        int duracao;
         Scanner scanner = new Scanner(System.in);
         VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
         SearchStrategy searchStrategy = new TitleSearchStrategy();
@@ -29,12 +31,31 @@ public class Main {
             scanner.nextLine(); // Consumir a quebra de linha
 
             if (opcao == 1) {
-                System.out.print("Digite o título do vídeo: ");
-                String titulo = scanner.nextLine();
-                System.out.print("Digite a descrição do vídeo: ");
-                String descricao = scanner.nextLine();
+                do {
+                    System.out.print("Digite o título do vídeo: ");
+                    titulo = scanner.nextLine();
+
+                    if (titulo.isEmpty()) {
+                        System.out.println("Por favor, escreva um título!");
+                    }
+                }while (titulo.isEmpty());
+
+                do {
+                    System.out.print("Digite a descrição do vídeo: ");
+                    descricao = scanner.nextLine();
+
+                    if (descricao.isEmpty()) {
+                        System.out.println("Por favor, escreva uma descrição!");
+                    }
+                } while (descricao.isEmpty());
+
+
+
+
                 System.out.print("Digite a duração do vídeo (em minutos): ");
-                int duracao = scanner.nextInt();
+                duracao = scanner.nextInt();
+
+
                 scanner.nextLine(); // Consumir a quebra de linha
                 System.out.print("Digite a categoria do vídeo: ");
                 String categoria = scanner.nextLine();
