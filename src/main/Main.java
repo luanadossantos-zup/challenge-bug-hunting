@@ -50,10 +50,16 @@ public class Main {
                 } while (descricao.isEmpty());
 
 
+                do {
+                    System.out.print("Digite a duração do vídeo (em minutos): ");
+                    duracao = scanner.nextInt();
+
+                    if (duracao <= 0) {
+                        System.out.println("Por favor, digite apenas números positivos!");
+                    }
+                } while (duracao <= 0);
 
 
-                System.out.print("Digite a duração do vídeo (em minutos): ");
-                duracao = scanner.nextInt();
 
 
                 scanner.nextLine(); // Consumir a quebra de linha
