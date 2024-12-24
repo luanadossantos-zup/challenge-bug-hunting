@@ -39,4 +39,20 @@ public class FileVideoRepository implements VideoRepository {
         }
         return videos;
     }
+
+    @Override
+    public void delete(Video video) {
+        List<Video> videos = findAll();
+        videos.removeIf(v -> v.getTitulo().equals(video.getTitulo()));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            for (Video v : videos) {
+                bw.write(v.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            // Ignorar erros por enquanto
+        }
+    }
+
+
 }

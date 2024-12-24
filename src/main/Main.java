@@ -19,13 +19,14 @@ public class Main {
         int duracao = 0;
         String categoria = "";
         String dataStr;
+        int escolhaCategoria;
         Scanner scanner = new Scanner(System.in);
         VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
         SearchStrategy searchStrategy = new TitleSearchStrategy();
 
         while (true) {
             System.out.println("===========================================");
-            System.out.println("\n=== Sistema de Gerenciamento de Vídeos ===");
+            System.out.println("=== Sistema de Gerenciamento de Vídeos ===");
             System.out.println("===========================================");
             System.out.println("1. Adicionar vídeo");
             System.out.println("2. Listar vídeos");
@@ -123,27 +124,36 @@ public class Main {
                     do {
                         try {
                             // Consumir a quebra de linha
-                            System.out.print("Digite a categoria do vídeo: ");
-                            categoria = scanner.nextLine();
+                            System.out.println("Selecione a categoria do vídeo: ");
+                            System.out.println("1 - Aventura");
+                            System.out.println("2 - Ação");
+                            System.out.println("3 - Suspense");
+                            System.out.println("4 - Comédia");
+                            System.out.println("5 - Romance");
+                            System.out.println("6 - Drama");
+
+
                             System.out.println(" ");
+                            escolhaCategoria = scanner.nextInt();
 
-
-                            if (categoria.isBlank()) {
-                                System.out.println(" --- Por favor, escreva o nome da categoria! --- ");
-                                System.out.println(" ");
-                                continue;
-                            }
-                            if (categoria.charAt(0) >= '0' && categoria.charAt(0) <= '9') {
-                                System.out.println(" --- Por favor, digite um nome válido, não números! ---");
-                                System.out.println(" ");
-                                continue;
-                            }
 
                         } catch (Exception e) {
+                            System.out.println(" -- Digite um número de 1 a 5! --");
                             break;
                         }
-                    } while (categoria.isBlank() || categoria.charAt(0) >= '0' && categoria.charAt(0) <= '9');
 
+                        categoria = switch (escolhaCategoria) {
+                            case 1 -> "Aventura";
+                            case 2 -> "Ação";
+                            case 3 -> "Suspense";
+                            case 4 -> "Comédia";
+                            case 5 -> "Romance";
+                            case 6 -> "Drama";
+                            default -> categoria;
+                        };
+                    } while (escolhaCategoria <1 || escolhaCategoria> 6 );
+
+                    scanner.nextLine();
 
                     do {
                         System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
@@ -175,36 +185,227 @@ public class Main {
                 //Listar vídeos
                     System.out.println(" ");
                     System.out.println("========== 2. Listar vídeos ==============");
+                    System.out.println(" ");
                     List<Video> videos = videoService.listVideos();
                     for (Video video : videos) {
                         System.out.println(video);
                     }
+                    if (videos.isEmpty()) {
+                        System.out.println(" -- Nenhum vídeo encontrado! -- ");
+                    }
+                    System.out.println(" ");
                     break;
 
 
                 case 3:
                 //Pesquisar vídeo por título
+                    System.out.println(" ");
+                    System.out.println("========== 3. Pesquisar vídeo por título ==============");
                     System.out.print("Digite o título para busca: ");
                     String query = scanner.nextLine();
-                    List<Video> resultados = searchStrategy.search(videoService.listVideos(), query);
-                    for (Video video : resultados) {
-                        System.out.println(video);
+                    System.out.println(" ");
+                    System.out.println("Resultados da busca:");
+                    System.out.println(" ");
+                    List<Video> resultadosBuscaVideo = searchStrategy.search(videoService.listVideos(), query);
+
+                    if (resultadosBuscaVideo.isEmpty()) {
+                        System.out.println(" -- Nenhum vídeo encontrado com o título especificado! -- ");
+                        break;
                     }
+                    for (Video video : resultadosBuscaVideo) {
+                        System.out.println(video);
+                        System.out.println("------------------------------");
+                    }
+                    System.out.println(" ");
                     break;
 
                 case 4:
                 //Editar vídeo
                 // Permitir que o usuário edite as informações de um vídeo existente.
+                    System.out.println(" ");
+                    System.out.println("========== 4. Editar informações de vídeo ==============");
+                    System.out.print("Digite o título para busca: ");
+                    String tituloEdicao = scanner.nextLine();
+                    System.out.println(" ");
+
+                    List<Video> resultadosEdicao = searchStrategy.search(videoService.listVideos(), tituloEdicao);
+                    if (resultadosEdicao.isEmpty()) {
+                        System.out.println("Nenhum vídeo encontrado com o título especificado.");
+                        break;
+                    }
+
+
+
+                    Video videoParaEditar = resultadosEdicao.get(0);
+                    Video videoAnteriorParaDeletar = resultadosEdicao.get(0);
+
+                    System.out.println("Vídeo encontrado:");
+                    System.out.println(videoParaEditar);
+                    System.out.println("------------------------------");
+
+                    // Permitir edição dos campos
+                    System.out.print("Deseja alterar o título? (S/N): ");
+                    String resposta = scanner.nextLine();
+                    if (resposta.equalsIgnoreCase("S")) {
+                        System.out.print("Novo título: ");
+                        String novoTitulo = scanner.nextLine();
+                        videoParaEditar = new Video(novoTitulo, videoParaEditar.getDescricao(), videoParaEditar.getDuracao(), videoParaEditar.getCategoria(), videoParaEditar.getDataPublicacao());
+                    }
+
+                    System.out.print("Deseja alterar a descrição? (S/N): ");
+                    resposta = scanner.nextLine();
+                    if (resposta.equalsIgnoreCase("S")) {
+                        System.out.print("Nova descrição: ");
+                        String novaDescricao = scanner.nextLine();
+                        videoParaEditar = new Video(videoParaEditar.getTitulo(), novaDescricao, videoParaEditar.getDuracao(), videoParaEditar.getCategoria(), videoParaEditar.getDataPublicacao());
+                    }
+
+                    System.out.print("Deseja alterar a duração? (S/N): ");
+                    resposta = scanner.nextLine();
+                    if (resposta.equalsIgnoreCase("S")) {
+                        System.out.print("Nova duração (em minutos): ");
+                        int novaDuracao = scanner.nextInt();
+                        scanner.nextLine(); // Consumir quebra de linha
+                        videoParaEditar = new Video(videoParaEditar.getTitulo(), videoParaEditar.getDescricao(), novaDuracao, videoParaEditar.getCategoria(), videoParaEditar.getDataPublicacao());
+                    }
+
+                    System.out.print("Deseja alterar a categoria? (S/N): ");
+                    resposta = scanner.nextLine();
+                    if (resposta.equalsIgnoreCase("S")) {
+                        System.out.println("Selecione a nova categoria:");
+                        System.out.println("1 - Aventura");
+                        System.out.println("2 - Ação");
+                        System.out.println("3 - Suspense");
+                        System.out.println("4 - Comédia");
+                        System.out.println("5 - Romance");
+                        System.out.println("6 - Drama");
+
+                        int novaCategoriaEscolha = scanner.nextInt();
+                        scanner.nextLine(); // Consumir quebra de linha
+                        String novaCategoria = switch (novaCategoriaEscolha) {
+                            case 1 -> "Aventura";
+                            case 2 -> "Ação";
+                            case 3 -> "Suspense";
+                            case 4 -> "Comédia";
+                            case 5 -> "Romance";
+                            case 6 -> "Drama";
+                            default -> videoParaEditar.getCategoria();
+                        };
+                        videoParaEditar = new Video(videoParaEditar.getTitulo(), videoParaEditar.getDescricao(), videoParaEditar.getDuracao(), novaCategoria, videoParaEditar.getDataPublicacao());
+                    }
+
+                    System.out.print("Deseja alterar a data de publicação? (S/N): ");
+                    resposta = scanner.nextLine();
+                    if (resposta.equalsIgnoreCase("S")) {
+                        System.out.print("Nova data de publicação (dd/MM/yyyy): ");
+                        String novaDataStr = scanner.nextLine();
+                        try {
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            Date novaDataPublicacao = sdf.parse(novaDataStr);
+                            videoParaEditar = new Video(videoParaEditar.getTitulo(), videoParaEditar.getDescricao(), videoParaEditar.getDuracao(), videoParaEditar.getCategoria(), novaDataPublicacao);
+                        } catch (Exception e) {
+                            System.out.println("Formato de data inválido. Alteração ignorada.");
+                        }
+                    }
+
+
+                    videoService.deleteVideo(videoAnteriorParaDeletar);
+                    videoService.addVideo(videoParaEditar);
+                    System.out.println("Informações do vídeo atualizadas com sucesso!");
+                    break;
 
 
                 case 5:
                 //Excluir vídeo
                 //Adicionar a opção de remover um vídeo do sistema.
+                    String escolha = "";
+                    System.out.println(" ");
+                    System.out.println("========== 5. Excluir um vídeo ==============");
+                    System.out.print("Digite o título do vídeo que você quer deletar: ");
+                    String buscaVideoExclusao = scanner.nextLine();
+                    System.out.println(" ");
+
+                    List<Video> resultados = searchStrategy.search(videoService.listVideos(), buscaVideoExclusao);
+                    System.out.println("Resultados da busca:");
+                    System.out.println(" ");
+                    if (resultados.isEmpty()) {
+                        System.out.println(" -- Nenhum vídeo encontrado com o título especificado! -- ");
+                    }
+
+                    Video videoParaDeletar = resultados.get(0);
+                    System.out.println(videoParaDeletar);
+
+                    System.out.println(" ");
+                    do {
+                        try {
+                            System.out.print("Deseja deletar o vídeo? (S/N):");
+
+                            escolha = scanner.nextLine();
+                            if (escolha.equalsIgnoreCase("s")) {
+                                videoService.deleteVideo(videoParaDeletar);
+                                System.out.println("Vídeo deletado com sucesso!");
+                                break;
+                            }
+
+
+                        }catch (Exception e) {
+                            System.out.println(" -- Por favor, S para Sim ou N para Não -- ");
+                            break;
+                        }
+
+
+                    } while (escolha.isBlank());
+                    break;
+
+
 
 
                 case 6:
                 //Filtrar vídeos por categoria
                 //Listar apenas os vídeos de uma categoria específica
+                    int escolhaFiltroGenero = 0;
+                    System.out.println(" ");
+                    System.out.println("========== 6. Filtrar vídeos por categoria ==============");
+                    List<Video> videosFiltroGenero = videoService.listVideos();
+
+                    do {
+                        try{
+                            System.out.print("Digite o número correspondente a categoria de vídeo que você quer listar: ");
+                            escolhaFiltroGenero = scanner.nextInt();
+
+                            System.out.println("1 - Aventura");
+                            System.out.println("2 - Ação");
+                            System.out.println("3 - Suspense");
+                            System.out.println("4 - Comédia");
+                            System.out.println("5 - Romance");
+                            System.out.println("6 - Drama");
+
+
+
+                        } catch (Exception e) {
+                            break;
+                        }
+
+                        switch (escolhaFiltroGenero) {
+                            case 1 :
+
+                                System.out.println("Listando vídeos de Aventura:");
+                                for (Video video : videosFiltroGenero) {
+                                    if (video.getCategoria().equalsIgnoreCase("Aventura")) {
+                                        System.out.println(video);
+                                    }
+
+
+                                }
+
+
+                            case 2 :
+
+
+                        }
+
+                    } while (escolhaFiltroGenero < 1 || escolhaFiltroGenero > 6);
+
 
 
                 case 7:
@@ -217,6 +418,93 @@ public class Main {
                 //Número total de vídeos.
                 //Duração total de todos os vídeos.
                 //Quantidade de vídeos por categoria.
+                    System.out.println("========== 8. Relatório de Estatísticas ==============");
+                    System.out.println(" ");
+                    int quantiaDeVideosTotal = 0;
+                    int duracaoTotalVideos = 0;
+                    int totalAventura = 0;
+                    int totalAcao = 0;
+                    int totalSuspense = 0;
+                    int totalComedia = 0;
+                    int totalRomance = 0;
+                    int totalDrama = 0;
+
+                    List<Video> videosEstatistica = videoService.listVideos();
+
+                    //Quantia de videos
+                    for (Video video : videosEstatistica) {
+
+                       quantiaDeVideosTotal = quantiaDeVideosTotal +1;
+
+                    }
+                    System.out.println("Quantia total de vídeos: " + quantiaDeVideosTotal);
+
+
+                    //Duração total dos vídeos
+                    for (Video video : videosEstatistica) {
+
+                        duracaoTotalVideos = duracaoTotalVideos + video.getDuracao();
+
+                    }
+                    System.out.println("Duração total de todos os vídeos: " + duracaoTotalVideos + " minutos.");
+
+
+                    //Quantidade de vídeos por categoria
+                    //Aventura
+                    for (Video video : videosEstatistica) {
+                        if (video.getCategoria().equalsIgnoreCase("Aventura")) {
+                            totalAventura = totalAventura + 1;
+                        }
+                    }
+                    System.out.println("Aventura: " + totalAventura + " vídeos;");
+
+                    //Ação
+                    for (Video video : videosEstatistica) {
+                        if (video.getCategoria().equalsIgnoreCase("Ação")) {
+                            totalAcao = totalAcao + 1;
+                        }
+                    }
+                    System.out.println("Ação: " + totalAcao + " vídeos;");
+
+                    //Suspense
+                    for (Video video : videosEstatistica) {
+                        if (video.getCategoria().equalsIgnoreCase("Suspense")) {
+                            totalSuspense = totalSuspense + 1;
+                        }
+                    }
+                    System.out.println("Suspense: " + totalSuspense + " vídeos;");
+
+                    //Comedia
+                    for (Video video : videosEstatistica) {
+                        if (video.getCategoria().equalsIgnoreCase("Comédia")) {
+                            totalComedia = totalComedia + 1;
+                        }
+                    }
+                    System.out.println("Comédia: " + totalComedia + " vídeos;");
+
+
+                    //Romance
+                    for (Video video : videosEstatistica) {
+                        if (video.getCategoria().equalsIgnoreCase("Romance")) {
+                            totalRomance = totalRomance + 1;
+                        }
+                    }
+                    System.out.println("Romance: " + totalRomance + " vídeos;");
+
+                    //Drama
+                    for (Video video : videosEstatistica) {
+                        if (video.getCategoria().equalsIgnoreCase("Drama")) {
+                            totalDrama = totalDrama + 1;
+                        }
+                    }
+                    System.out.println("Drama: " + totalDrama + " vídeos;");
+
+
+                    if (videosEstatistica.isEmpty()) {
+                        System.out.println(" -- Nenhum vídeo encontrado! -- ");
+                    }
+                    System.out.println(" ");
+                    break;
 
                 case 9:
                 //Sair

@@ -12,4 +12,6 @@ public class TitleSearchStrategy implements SearchStrategy {
                 .filter(video -> video.getTitulo().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
+
+
 }
