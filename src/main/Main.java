@@ -10,6 +10,7 @@ import strategy.TitleSearchStrategy;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -25,9 +26,9 @@ public class Main {
         SearchStrategy searchStrategy = new TitleSearchStrategy();
 
         while (true) {
-            System.out.println("===========================================");
-            System.out.println("=== Sistema de Gerenciamento de Vídeos ===");
-            System.out.println("===========================================");
+            System.out.println("========================================================");
+            System.out.println("========== Sistema de Gerenciamento de Vídeos ==========");
+            System.out.println("========================================================");
             System.out.println("1. Adicionar vídeo");
             System.out.println("2. Listar vídeos");
             System.out.println("3. Pesquisar vídeo por título");
@@ -37,10 +38,10 @@ public class Main {
             System.out.println("7. Ordenar vídeo por data de publicação");
             System.out.println("8. Exibir relatório de estatísticas");
             System.out.println("9. Sair");
-            System.out.println("===========================================");
+            System.out.println("========================================================");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
-            System.out.println("===========================================");
+            System.out.println("========================================================");
 
             scanner.nextLine(); // Consumir a quebra de linha
 
@@ -49,7 +50,7 @@ public class Main {
                 case 1:
                 //Adicionar video
                     System.out.println(" ");
-                    System.out.println("========== 1. Adicionar vídeo ==============");
+                    System.out.println("============= 1. Adicionar vídeo ===============");
                     do {
 
                         try {
@@ -184,7 +185,7 @@ public class Main {
                 case 2:
                 //Listar vídeos
                     System.out.println(" ");
-                    System.out.println("========== 2. Listar vídeos ==============");
+                    System.out.println("============= 2. Listar vídeos =================");
                     System.out.println(" ");
                     List<Video> videos = videoService.listVideos();
                     for (Video video : videos) {
@@ -200,7 +201,7 @@ public class Main {
                 case 3:
                 //Pesquisar vídeo por título
                     System.out.println(" ");
-                    System.out.println("========== 3. Pesquisar vídeo por título ==============");
+                    System.out.println("=========== 3. Pesquisar vídeo por título ==============");
                     System.out.print("Digite o título para busca: ");
                     String query = scanner.nextLine();
                     System.out.println(" ");
@@ -223,7 +224,7 @@ public class Main {
                 //Editar vídeo
                 // Permitir que o usuário edite as informações de um vídeo existente.
                     System.out.println(" ");
-                    System.out.println("========== 4. Editar informações de vídeo ==============");
+                    System.out.println("========== 4. Editar informações de vídeo =============");
                     System.out.print("Digite o título para busca: ");
                     String tituloEdicao = scanner.nextLine();
                     System.out.println(" ");
@@ -366,12 +367,12 @@ public class Main {
                     int escolhaFiltroGenero = 0;
                     System.out.println(" ");
                     System.out.println("========== 6. Filtrar vídeos por categoria ==============");
+                    System.out.println(" ");
                     List<Video> videosFiltroGenero = videoService.listVideos();
 
                     do {
                         try{
-                            System.out.print("Digite o número correspondente a categoria de vídeo que você quer listar: ");
-                            escolhaFiltroGenero = scanner.nextInt();
+                            System.out.println("Digite o número correspondente a categoria de vídeo que você quer listar: ");
 
                             System.out.println("1 - Aventura");
                             System.out.println("2 - Ação");
@@ -379,6 +380,8 @@ public class Main {
                             System.out.println("4 - Comédia");
                             System.out.println("5 - Romance");
                             System.out.println("6 - Drama");
+
+                            escolhaFiltroGenero = scanner.nextInt();
 
 
 
@@ -390,21 +393,80 @@ public class Main {
                             case 1 :
 
                                 System.out.println("Listando vídeos de Aventura:");
+                                System.out.println(" ");
                                 for (Video video : videosFiltroGenero) {
                                     if (video.getCategoria().equalsIgnoreCase("Aventura")) {
+                                        System.out.println(video);
+                                        break;
+                                    } else {
+                                        System.out.println(" -- Nenhum vídeo de aventura disponível -- ");
+                                    }
+                                }
+                                break;
+
+                            case 2 :
+                                System.out.println("Listando vídeos de Ação:");
+                                System.out.println(" ");
+                                for (Video video : videosFiltroGenero) {
+                                    if (video.getCategoria().equalsIgnoreCase("Ação")) {
+                                        System.out.println(video);
+
+                                    } else {
+                                        System.out.println(" -- Nenhum vídeo de ação disponível -- ");
+                                    }
+                                }
+                                break;
+
+                            case 3 :
+                                System.out.println("Listando vídeos de Suspense:");
+                                System.out.println(" ");
+                                for (Video video : videosFiltroGenero) {
+                                    if (video.getCategoria().equalsIgnoreCase("Suspense")) {
                                         System.out.println(video);
                                     }
 
 
                                 }
+                                break;
 
+                            case 4 :
+                                System.out.println("Listando vídeos de Comédia:");
+                                System.out.println(" ");
+                                for (Video video : videosFiltroGenero) {
+                                    if (video.getCategoria().equalsIgnoreCase("Comédia")) {
+                                        System.out.println(video);
+                                    }
+                                }
+                                break;
 
-                            case 2 :
+                            case 5:
+                                System.out.println("Listando vídeos de Romance:");
+                                System.out.println(" ");
+                                for (Video video : videosFiltroGenero) {
+                                    if (video.getCategoria().equalsIgnoreCase("Romance")) {
+                                        System.out.println(video);
+                                    } else {
+                                        System.out.println(" -- Nenhum vídeo de romance disponível -- ");
+                                    }
+                                }
+                                break;
 
+                            case 6 :
+                                System.out.println("Listando vídeos de Drama:");
+                                System.out.println(" ");
+                                for (Video video : videosFiltroGenero) {
+                                    if (video.getCategoria().equalsIgnoreCase("Drama")) {
+                                        System.out.println(video);
+                                    } else {
+                                        System.out.println(" -- Nenhum vídeo de drama disponível -- ");
+                                    }
+                                }
+                                break;
 
                         }
 
                     } while (escolhaFiltroGenero < 1 || escolhaFiltroGenero > 6);
+                    break;
 
 
 
