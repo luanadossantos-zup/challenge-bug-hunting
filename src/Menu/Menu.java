@@ -73,11 +73,10 @@ public class Menu {
     public void editarVideo(Scanner scanner, SearchStrategy searchStrategy, VideoService videoService) {
         System.out.println(" ");
         System.out.println("============== 4. Editar informações de vídeo ==================");
-        System.out.print("Digite o título para busca: ");
-        String tituloEdicao = scanner.nextLine();
-        System.out.println(" ");
 
-        fileHandler.editarVideo(scanner,searchStrategy,videoService, tituloEdicao);
+
+
+        fileHandler.editarVideo(scanner,searchStrategy,videoService);
     }
 
     public void excluirVideo(Scanner scanner, SearchStrategy searchStrategy, VideoService videoService) {
