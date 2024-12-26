@@ -26,6 +26,7 @@ public class Main {
         SearchStrategy searchStrategy = new TitleSearchStrategy();
 
         while (true) {
+            System.out.println(" ");
             System.out.println("========================================================");
             System.out.println("========== Sistema de Gerenciamento de Vídeos ==========");
             System.out.println("========================================================");
@@ -189,7 +190,7 @@ public class Main {
                     System.out.println(" ");
                     List<Video> videos = videoService.listVideos();
                     for (Video video : videos) {
-                        System.out.println(video);
+                        System.out.println("- " + video);
                     }
                     if (videos.isEmpty()) {
                         System.out.println(" -- Nenhum vídeo encontrado! -- ");
@@ -371,6 +372,7 @@ public class Main {
                     List<Video> videosFiltroGenero = videoService.listVideos();
 
                     do {
+
                         try{
                             System.out.println("Digite o número correspondente a categoria de vídeo que você quer listar: ");
 
@@ -383,84 +385,112 @@ public class Main {
 
                             escolhaFiltroGenero = scanner.nextInt();
 
-
-
                         } catch (Exception e) {
                             break;
                         }
 
+                        System.out.println(" ");
+
                         switch (escolhaFiltroGenero) {
                             case 1 :
-
+                                int quantiaDeAventura = 0;
                                 System.out.println("Listando vídeos de Aventura:");
                                 System.out.println(" ");
                                 for (Video video : videosFiltroGenero) {
                                     if (video.getCategoria().equalsIgnoreCase("Aventura")) {
-                                        System.out.println(video);
-                                        break;
-                                    } else {
-                                        System.out.println(" -- Nenhum vídeo de aventura disponível -- ");
+                                        System.out.println("- " + video);
+                                        quantiaDeAventura = quantiaDeAventura + 1;
+
                                     }
+                                }
+
+                                if (quantiaDeAventura == 0) {
+                                    System.out.println("-- Nenhum vídeo de Aventura encontrado --");
                                 }
                                 break;
 
                             case 2 :
+                                int quantiaDeAcao = 0;
                                 System.out.println("Listando vídeos de Ação:");
                                 System.out.println(" ");
                                 for (Video video : videosFiltroGenero) {
-                                    if (video.getCategoria().equalsIgnoreCase("Ação")) {
-                                        System.out.println(video);
+                                    if (video.getCategoria().toLowerCase().equalsIgnoreCase("Ação")) {
+                                        System.out.println("- " + video);
+                                        quantiaDeAcao =  quantiaDeAcao + 1;
 
-                                    } else {
-                                        System.out.println(" -- Nenhum vídeo de ação disponível -- ");
                                     }
+                                }
+
+                                if (quantiaDeAcao == 0) {
+                                    System.out.println("-- Nenhum vídeo de Ação encontrado -- ");
                                 }
                                 break;
 
                             case 3 :
+                                int quantiaDeSuspense = 0;
                                 System.out.println("Listando vídeos de Suspense:");
                                 System.out.println(" ");
                                 for (Video video : videosFiltroGenero) {
                                     if (video.getCategoria().equalsIgnoreCase("Suspense")) {
-                                        System.out.println(video);
+                                        System.out.println("- " + video);
+                                        quantiaDeSuspense = quantiaDeSuspense + 1;
+
                                     }
+                                }
 
-
+                                if (quantiaDeSuspense == 0) {
+                                    System.out.println("-- Nenhum vídeo de Suspense encontrado -- ");
                                 }
                                 break;
 
                             case 4 :
+                                int quantiaDeComedia = 0;
                                 System.out.println("Listando vídeos de Comédia:");
                                 System.out.println(" ");
                                 for (Video video : videosFiltroGenero) {
                                     if (video.getCategoria().equalsIgnoreCase("Comédia")) {
-                                        System.out.println(video);
+                                        System.out.println("- " + video);
+                                        quantiaDeComedia = quantiaDeComedia + 1;
+
                                     }
+                                }
+
+                                if (quantiaDeComedia == 0) {
+                                    System.out.println("-- Nenhum vídeo de Comédia encontrado --");
                                 }
                                 break;
 
                             case 5:
+                                int quantiaDeRomance = 0;
                                 System.out.println("Listando vídeos de Romance:");
                                 System.out.println(" ");
                                 for (Video video : videosFiltroGenero) {
                                     if (video.getCategoria().equalsIgnoreCase("Romance")) {
-                                        System.out.println(video);
-                                    } else {
-                                        System.out.println(" -- Nenhum vídeo de romance disponível -- ");
+                                        quantiaDeRomance = quantiaDeRomance + 1;
+                                        System.out.println("- " + video);
                                     }
+                                }
+
+                                if (quantiaDeRomance == 0) {
+                                    System.out.println("-- Nenhum vídeo de Romance encontrado --");
                                 }
                                 break;
 
                             case 6 :
+                                int quantiaDeDrama = 0;
                                 System.out.println("Listando vídeos de Drama:");
                                 System.out.println(" ");
                                 for (Video video : videosFiltroGenero) {
                                     if (video.getCategoria().equalsIgnoreCase("Drama")) {
-                                        System.out.println(video);
-                                    } else {
-                                        System.out.println(" -- Nenhum vídeo de drama disponível -- ");
+                                        System.out.println("- " + video);
+                                        quantiaDeDrama = quantiaDeDrama + 1;
                                     }
                                 }
+
+                                if (quantiaDeDrama == 0) {
+                                    System.out.println("-- Nenhum vídeo de Drama encontrado --");
+                                }
+
                                 break;
 
                         }
