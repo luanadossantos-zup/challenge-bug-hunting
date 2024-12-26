@@ -1,5 +1,4 @@
-The Brollys;Desenho;20;Aventura; 23/04/1994
-Duro de Matar 1;Filme;120;Ação; 12/10/1989
-Duro de Matar 2;Filme;123;Ação; 12/12/1991
-Cowboys de Moomesa;Desenho;21;Aventura; 12/03/1998
-Bouli;Desenho;15;Aventura; 02/04/1993
+
+Lost;Seriado de mistério;600;Série; 11/10/2004
+A Espera de Um Milagre;Filme longo;123;Filme; 07/03/1999
+The Good Place;Serie de comedia;300;Série; 20/03/2017

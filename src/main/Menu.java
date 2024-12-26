@@ -118,7 +118,7 @@ public class Menu {
                 // Consumir a quebra de linha
                 System.out.println("Selecione a categoria do vídeo: ");
                 System.out.println("1 - Filme");
-                System.out.println("2 - Serie");
+                System.out.println("2 - Série");
                 System.out.println("3 - Documentário");
                 System.out.println("4 - Curta-metragem");
                 System.out.println("5 - Desenho");
@@ -353,7 +353,7 @@ public class Menu {
                 System.out.println("Digite o número correspondente a categoria de vídeo que você quer listar: ");
 
                 System.out.println("1 - Filme");
-                System.out.println("2 - Serie");
+                System.out.println("2 - Série");
                 System.out.println("3 - Documentario");
                 System.out.println("4 - Curta-metragem");
                 System.out.println("5 - Desenho");
@@ -387,10 +387,10 @@ public class Menu {
 
                 case 2 :
                     int quantiaDeSerie = 0;
-                    System.out.println("Listando vídeos de Serie:");
+                    System.out.println("Listando vídeos de Série:");
                     System.out.println(" ");
                     for (Video video : videosFiltroCategoria) {
-                        if (video.getCategoria().toLowerCase().equalsIgnoreCase("Serie")) {
+                        if (video.getCategoria().toLowerCase().equalsIgnoreCase("Série")) {
                             System.out.println("- " + video);
                             quantiaDeSerie =  quantiaDeSerie + 1;
 
@@ -404,10 +404,10 @@ public class Menu {
 
                 case 3 :
                     int quantiaDeDocumentario = 0;
-                    System.out.println("Listando vídeos de Documentario:");
+                    System.out.println("Listando vídeos de Documentário:");
                     System.out.println(" ");
                     for (Video video : videosFiltroCategoria) {
-                        if (video.getCategoria().equalsIgnoreCase("Documentario")) {
+                        if (video.getCategoria().equalsIgnoreCase("Documentário")) {
                             System.out.println("- " + video);
                             quantiaDeDocumentario = quantiaDeDocumentario + 1;
 
@@ -415,7 +415,7 @@ public class Menu {
                     }
 
                     if (quantiaDeDocumentario == 0) {
-                        System.out.println("-- Nenhum vídeo de Documentario encontrado -- ");
+                        System.out.println("-- Nenhum vídeo de Documentário encontrado -- ");
                     }
                     break;
 
