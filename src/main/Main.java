@@ -1,6 +1,6 @@
 package main;
 
-import model.Video;
+import Menu.Menu;
 import repository.FileVideoRepository;
 import service.VideoService;
 import service.VideoServiceImpl;
