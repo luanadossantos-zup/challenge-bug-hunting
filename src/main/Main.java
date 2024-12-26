@@ -8,10 +8,7 @@ import strategy.SearchStrategy;
 import strategy.TitleSearchStrategy;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -503,7 +500,23 @@ public class Main {
                 case 7:
                 //Ordenar vídeos por data de publicação
                 //Listar os vídeos em ordem cronológica
+                    System.out.println(" ");
+                    System.out.println("========== 7. Filtrar vídeos por data de publicação ==============");
+                    System.out.println(" ");
+                    List<Video> videosFiltroData = videoService.listVideos();
 
+                    Collections.sort(videosFiltroData, new Comparator<Video>() {
+                        @Override
+                        public int compare(Video o1, Video o2) {
+                            return o1.getDataPublicacao().compareTo(o2.getDataPublicacao());
+
+                        }
+                    });
+
+                    for (Video video : videosFiltroData) {
+                        System.out.println(video);
+                    }
+                    break;
 
                 case 8:
                 //Exibir relatório de estatísticas
