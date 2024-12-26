@@ -77,17 +77,16 @@ public class FileHandler {
                 if (duracao <= 0) {
                     System.out.println(" --- Por favor, digite apenas números positivos! --- ");
                     System.out.println(" ");
-                    scanner.nextLine();
                     continue;
 
                 }
-                break;
 
+                break;
             } catch (Exception e) {
                 System.out.println(" --- Digite apenas números! --- ");
                 System.out.println(" ");
                 scanner.nextLine();
-                break;
+
             }
 
         } while (true);
@@ -129,13 +128,13 @@ public class FileHandler {
         scanner.nextLine();
 
         do {
-            System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
-            dataStr = scanner.nextLine();
-            System.out.println(" ");
 
             try {
+                System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
+                dataStr = scanner.nextLine();
+                System.out.println(" ");
 
-                if (dataStr.isBlank()) {
+                if (dataStr.isBlank() ) {
                     System.out.println(" --- Por favor, escreva a data da publicação! --- ");
                     System.out.println(" ");
                     continue;
@@ -146,12 +145,17 @@ public class FileHandler {
                 Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
                 videoService.addVideo(video);
                 System.out.println("Vídeo adicionado com sucesso!");
-            } catch (Exception e) {
-                System.out.println("Data com formato inválido! Tente novamente.");
+
                 break;
+
+            } catch (Exception e) {
+                System.out.println(" -- Data com formato inválido! Tente novamente. -- ");
+                System.out.println(" ");
+                continue;
             }
 
-        } while (dataStr.isBlank() || dataStr.length() != 10);
+
+        } while (true);
     }
 
     public void editarVideo(Scanner scanner, SearchStrategy searchStrategy, VideoService videoService, String tituloEdicao) {
