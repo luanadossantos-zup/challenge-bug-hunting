@@ -2,3 +2,4 @@ The Brollys;Desenho;20;Aventura; 23/04/1994
 Duro de Matar 1;Filme;120;Ação; 12/10/1989
 Duro de Matar 2;Filme;123;Ação; 12/12/1991
 Cowboys de Moomesa;Desenho;21;Aventura; 12/03/1998
+Bouli;Desenho;15;Aventura; 02/04/1993
