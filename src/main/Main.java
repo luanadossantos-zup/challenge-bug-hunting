@@ -43,7 +43,6 @@ public class Main {
                     menu.editarVideo(scanner,searchStrategy,videoService);
                     break;
 
-
                 case 5:
                 //Excluir vídeo
                 //Adicionar a opção de remover um vídeo do sistema.
@@ -55,8 +54,6 @@ public class Main {
                 //Listar apenas os vídeos de uma categoria específica
                     menu.filtrarVideosPorCategoria(scanner,videoService);
                     break;
-
-
 
                 case 7:
                 //Ordenar vídeos por data de publicação
@@ -76,7 +73,6 @@ public class Main {
                 //Sair
                     System.out.println("Saindo do sistema...");
                     break;
-
 
             }
 
