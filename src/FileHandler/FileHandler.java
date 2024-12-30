@@ -426,32 +426,36 @@ public class FileHandler {
         List<Video> resultados = searchStrategy.search(videoService.listVideos(), buscaVideoExclusao);
         System.out.println("Resultados da busca:");
         System.out.println(" ");
+
         if (resultados.isEmpty()) {
             System.out.println(" -- Nenhum vídeo encontrado com o título especificado! -- ");
-        }
 
-        Video videoParaDeletar = resultados.get(0);
-        System.out.println(videoParaDeletar);
+        } else if (!resultados.isEmpty()) {
+            Video videoParaDeletar = resultados.get(0);
+            System.out.println(videoParaDeletar);
 
-        System.out.println(" ");
-        do {
-            try {
-                System.out.print("Deseja deletar o vídeo? (S/N):");
+            System.out.println(" ");
+            do {
+                try {
+                    System.out.print("Deseja deletar o vídeo? (S/N):");
 
-                escolha = scanner.nextLine();
-                if (escolha.equalsIgnoreCase("s")) {
-                    videoService.deleteVideo(videoParaDeletar);
-                    System.out.println("Vídeo deletado com sucesso!");
+                    escolha = scanner.nextLine();
+                    if (escolha.equalsIgnoreCase("s")) {
+                        videoService.deleteVideo(videoParaDeletar);
+                        System.out.println("Vídeo deletado com sucesso!");
+                        break;
+                    }
+
+
+                }catch (Exception e) {
+                    System.out.println(" -- Por favor, S para Sim ou N para Não -- ");
                     break;
                 }
 
 
-            }catch (Exception e) {
-                System.out.println(" -- Por favor, S para Sim ou N para Não -- ");
-                break;
-            }
+            } while (escolha.isBlank());
+        }
 
 
-        } while (escolha.isBlank());
     }
 }
