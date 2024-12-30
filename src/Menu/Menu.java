@@ -67,6 +67,12 @@ public class Menu {
         System.out.println("Resultados da busca:");
         System.out.println(" ");
 
+        System.out.println(" ");
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println("--- Título --- Descrição --- Duração (minutos) --- Categoria ---");
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println(" ");
+
         videoManager.pesquisarVideoPorTitulo(searchStrategy,videoService, query);
     }
 

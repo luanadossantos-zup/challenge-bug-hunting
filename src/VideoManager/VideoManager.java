@@ -31,7 +31,7 @@ public class VideoManager {
 
         }
         for (Video video : resultadosBuscaVideo) {
-            System.out.println(video);
+            System.out.println("- " + video);
             System.out.println("------------------------------");
         }
         System.out.println(" ");
