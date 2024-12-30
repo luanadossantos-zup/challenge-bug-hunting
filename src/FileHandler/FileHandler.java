@@ -364,7 +364,7 @@ public class FileHandler {
 
             }
 
-        } while (titulo.isBlank() || titulo.charAt(0) >= '0' && titulo.charAt(0) <= '9');
+        } while (titulo.isBlank() || Character.isDigit(titulo.charAt(0)));
 
         return titulo;
     }
