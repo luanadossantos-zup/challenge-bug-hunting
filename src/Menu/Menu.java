@@ -2,11 +2,8 @@ package Menu;
 
 import FileHandler.FileHandler;
 import VideoManager.VideoManager;
-import model.Video;
 import service.VideoService;
 import strategy.SearchStrategy;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Menu {

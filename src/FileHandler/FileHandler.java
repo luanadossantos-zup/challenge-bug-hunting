@@ -12,150 +12,29 @@ import java.util.Scanner;
 public class FileHandler {
 
     public void adicionarVideo (Scanner scanner, VideoService videoService) {
-        String titulo = "";
-        String descricao = "";
-        int duracao = 0;
-        String categoria = "";
-        String dataStr;
-        int escolhaCategoria;
-        do {
+        String titulo;
+        String descricao;
+        int duracao;
+        String categoria;
+        Date dataPublicacao;
 
-            try {
-                System.out.print("Digite o título do vídeo: ");
-                titulo = scanner.nextLine();
-                System.out.println(" ");
+        titulo = adicionaTituloVideo(scanner);
+        descricao = adicionaDescricaoVideo(scanner);
 
-                if (titulo.isBlank()) {
-                    System.out.println(" --- Por favor, escreva um título! --- ");
-                    System.out.println(" ");
-                    continue;
-                }
-                if (titulo.charAt(0) >= '0' && titulo.charAt(0) <= '9') {
-                    System.out.println(" --- Por favor, digite um nome válido, não números! --- ");
-                    System.out.println(" ");
-                    continue;
-                }
-
-            } catch (Exception e) {
-                break;
-
-            }
-
-        } while (titulo.isBlank() || titulo.charAt(0) >= '0' && titulo.charAt(0) <= '9');
-
-        do {
-            try {
-                System.out.print("Digite a descrição do vídeo: ");
-                descricao = scanner.nextLine();
-                System.out.println(" ");
-
-                if (descricao.isBlank()) {
-                    System.out.println(" --- Por favor, escreva uma descrição! --- ");
-                    System.out.println(" ");
-                    continue;
-                }
-                if (descricao.charAt(0) >= '0' && descricao.charAt(0) <= '9') {
-                    System.out.println(" --- Por favor, digite um nome válido, não números! ---");
-                    System.out.println(" ");
-                    continue;
-                }
-
-
-            } catch (Exception e) {
-                break;
-            }
-
-        } while (descricao.isBlank() || descricao.charAt(0) >= '0' && descricao.charAt(0) <= '9');
-
-
-        do {
-            try {
-                System.out.print("Digite a duração do vídeo (em minutos): ");
-                duracao = scanner.nextInt();
-                System.out.println(" ");
-
-                if (duracao <= 0) {
-                    System.out.println(" --- Por favor, digite apenas números positivos! --- ");
-                    System.out.println(" ");
-                    continue;
-
-                }
-
-                break;
-            } catch (Exception e) {
-                System.out.println(" --- Digite apenas números! --- ");
-                System.out.println(" ");
-                scanner.nextLine();
-
-            }
-
-        } while (true);
-
+        duracao = adicionaDuracaoVideo(scanner);
         scanner.nextLine();
 
-        do {
-            try {
-                // Consumir a quebra de linha
-                System.out.println("Selecione a categoria do vídeo: ");
-                System.out.println("1 - Filme");
-                System.out.println("2 - Série");
-                System.out.println("3 - Documentário");
-                System.out.println("4 - Curta-metragem");
-                System.out.println("5 - Desenho");
-                System.out.println("6 - Anime");
+
+        categoria = adicionaCategoriaVideo(scanner);
 
 
-                System.out.println(" ");
-                escolhaCategoria = scanner.nextInt();
+        dataPublicacao = adicionaDataPublicacaoVideo(scanner);
 
 
-            } catch (Exception e) {
-                System.out.println(" -- Digite um número de 1 a 5! --");
-                break;
-            }
 
-            categoria = switch (escolhaCategoria) {
-                case 1 -> "Filme";
-                case 2 -> "Série";
-                case 3 -> "Documentário";
-                case 4 -> "Curta-metragem";
-                case 5 -> "Desenho";
-                case 6 -> "Anime";
-                default -> categoria;
-            };
-        } while (escolhaCategoria <1 || escolhaCategoria> 6 );
-
-        scanner.nextLine();
-
-        do {
-
-            try {
-                System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
-                dataStr = scanner.nextLine();
-                System.out.println(" ");
-
-                if (dataStr.isBlank() ) {
-                    System.out.println(" --- Por favor, escreva a data da publicação! --- ");
-                    System.out.println(" ");
-                    continue;
-                }
-
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Date dataPublicacao = sdf.parse(dataStr);
-                Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
-                videoService.addVideo(video);
-                System.out.println(" --- Vídeo adicionado com sucesso! --- ");
-
-                break;
-
-            } catch (Exception e) {
-                System.out.println(" --- Data com formato inválido! Tente novamente. --- ");
-                System.out.println(" ");
-                continue;
-            }
-
-
-        } while (true);
+        
+        salvaVideo(videoService,titulo,descricao,duracao,categoria,dataPublicacao);
+        
     }
 
     public void editarVideo(Scanner scanner, SearchStrategy searchStrategy, VideoService videoService) {
@@ -457,5 +336,173 @@ public class FileHandler {
         }
 
 
+    }
+
+    public String adicionaTituloVideo (Scanner scanner) {
+        String titulo = "";
+
+        do {
+
+            try {
+                System.out.print("Digite o título do vídeo: ");
+                titulo = scanner.nextLine();
+                System.out.println(" ");
+
+                if (titulo.isBlank()) {
+                    System.out.println(" --- Por favor, escreva um título! --- ");
+                    System.out.println(" ");
+                    continue;
+                }
+                if (titulo.charAt(0) >= '0' && titulo.charAt(0) <= '9') {
+                    System.out.println(" --- Por favor, digite um nome válido, não números! --- ");
+                    System.out.println(" ");
+                    continue;
+                }
+
+            } catch (Exception e) {
+                break;
+
+            }
+
+        } while (titulo.isBlank() || titulo.charAt(0) >= '0' && titulo.charAt(0) <= '9');
+
+        return titulo;
+    }
+    
+    public String adicionaDescricaoVideo(Scanner scanner) {
+        String descricao = "";
+        do {
+            try {
+                System.out.print("Digite a descrição do vídeo: ");
+                descricao = scanner.nextLine();
+                System.out.println(" ");
+
+                if (descricao.isBlank()) {
+                    System.out.println(" --- Por favor, escreva uma descrição! --- ");
+                    System.out.println(" ");
+                    continue;
+                }
+                if (descricao.charAt(0) >= '0' && descricao.charAt(0) <= '9') {
+                    System.out.println(" --- Por favor, digite um nome válido, não números! ---");
+                    System.out.println(" ");
+                    continue;
+                }
+
+
+            } catch (Exception e) {
+                break;
+            }
+
+        } while (descricao.isBlank() || descricao.charAt(0) >= '0' && descricao.charAt(0) <= '9');
+
+        return descricao;
+    }
+    
+    public int adicionaDuracaoVideo(Scanner scanner) {
+        int duracao;
+        do {
+            try {
+                System.out.print("Digite a duração do vídeo (em minutos): ");
+                duracao = scanner.nextInt();
+                System.out.println(" ");
+
+                if (duracao <= 0) {
+                    System.out.println(" --- Por favor, digite apenas números positivos! --- ");
+                    System.out.println(" ");
+                    continue;
+
+                }
+
+                break;
+            } catch (Exception e) {
+                System.out.println(" --- Digite apenas números! --- ");
+                System.out.println(" ");
+                scanner.nextLine();
+
+            }
+
+        } while (true);
+
+        return duracao;
+    }
+    
+    public String adicionaCategoriaVideo(Scanner scanner) {
+        int escolhaCategoria = 0;
+        String categoria = "";
+        do {
+            try {
+
+                System.out.println("Selecione a categoria do vídeo: ");
+                System.out.println("1 - Filme");
+                System.out.println("2 - Série");
+                System.out.println("3 - Documentário");
+                System.out.println("4 - Curta-metragem");
+                System.out.println("5 - Desenho");
+                System.out.println("6 - Anime");
+
+
+                System.out.println(" ");
+                escolhaCategoria = scanner.nextInt();
+                scanner.nextLine();
+
+
+            } catch (Exception e) {
+                System.out.println(" -- Digite um número de 1 a 5! --");
+                break;
+            }
+
+            categoria = switch (escolhaCategoria) {
+                case 1 -> "Filme";
+                case 2 -> "Série";
+                case 3 -> "Documentário";
+                case 4 -> "Curta-metragem";
+                case 5 -> "Desenho";
+                case 6 -> "Anime";
+                default -> "";
+            };
+        } while (escolhaCategoria <1 || escolhaCategoria> 6 );
+
+        return categoria;
+    }
+    
+    public Date adicionaDataPublicacaoVideo (Scanner scanner) {
+        Date dataPublicacao;
+        String dataStr = "";
+
+        do {
+
+            try {
+                System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
+                dataStr = scanner.nextLine();
+                System.out.println(" ");
+
+                if (dataStr.isBlank() ) {
+                    System.out.println(" --- Por favor, escreva a data da publicação! --- ");
+                    System.out.println(" ");
+                    continue;
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                dataPublicacao = sdf.parse(dataStr);
+
+                System.out.println(" --- Vídeo adicionado com sucesso! --- ");
+
+                break;
+
+            } catch (Exception e) {
+                System.out.println(" --- Data com formato inválido! Tente novamente. --- ");
+                System.out.println(" ");
+                continue;
+            }
+
+
+        } while (true);
+
+        return dataPublicacao;
+    }
+
+    public void salvaVideo(VideoService videoService, String titulo, String descricao, int duracao, String categoria, Date dataPublicacao) {
+        Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
+        videoService.addVideo(video);
     }
 }
