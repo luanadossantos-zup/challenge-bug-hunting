@@ -27,12 +27,12 @@ public class VideoManager {
         List<Video> resultadosBuscaVideo = searchStrategy.search(videoService.listVideos(), query);
 
         if (resultadosBuscaVideo.isEmpty()) {
-            System.out.println(" -- Nenhum vídeo encontrado com o título especificado! -- ");
+            System.out.println(" --- Nenhum vídeo encontrado com o título especificado! --- ");
 
         }
         for (Video video : resultadosBuscaVideo) {
             System.out.println("- " + video);
-            System.out.println("------------------------------");
+
         }
         System.out.println(" ");
     }
@@ -61,10 +61,16 @@ public class VideoManager {
 
             System.out.println(" ");
 
+
+
             switch (escolhaFiltroCategoria) {
                 case 1 :
                     int quantiaDeFilme = 0;
                     System.out.println("Listando vídeos de Filme:");
+                    System.out.println(" ");
+                    System.out.println("--------------------------------------------------------------------------------");
+                    System.out.println("--- Título --- Descrição --- Duração (minutos) --- Categoria --- Data publicação");
+                    System.out.println("--------------------------------------------------------------------------------");
                     System.out.println(" ");
                     for (Video video : videosFiltroCategoria) {
                         if (video.getCategoria().equalsIgnoreCase("Filme")) {
@@ -180,7 +186,7 @@ public class VideoManager {
         });
 
         for (Video video : videosFiltroData) {
-            System.out.println(video);
+            System.out.println("- " + video);
         }
     }
 

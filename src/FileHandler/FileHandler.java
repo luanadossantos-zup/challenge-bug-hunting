@@ -144,12 +144,12 @@ public class FileHandler {
                 Date dataPublicacao = sdf.parse(dataStr);
                 Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
                 videoService.addVideo(video);
-                System.out.println("Vídeo adicionado com sucesso!");
+                System.out.println(" --- Vídeo adicionado com sucesso! --- ");
 
                 break;
 
             } catch (Exception e) {
-                System.out.println(" -- Data com formato inválido! Tente novamente. -- ");
+                System.out.println(" --- Data com formato inválido! Tente novamente. --- ");
                 System.out.println(" ");
                 continue;
             }
@@ -193,14 +193,14 @@ public class FileHandler {
                     resposta = scanner.nextLine().toUpperCase();
 
                     if (!resposta.equals("N") && !resposta.equals("S")) {
-                        System.out.println(" -- Por favor, digite apenas 'S' para Sim ou 'N' para Não");
+                        System.out.println(" --- Por favor, digite apenas 'S' para Sim ou 'N' para Não --- ");
                         System.out.println(" ");
                         continue;
                     }
 
                     break;
                 } catch (Exception e) {
-                    System.out.println(" -- Por favor, tente novamente! --");
+                    System.out.println(" --- Por favor, tente novamente! --- ");
                     System.out.println(" ");
                 }
 
@@ -224,7 +224,7 @@ public class FileHandler {
                         break;
 
                     } catch (Exception e) {
-                        System.out.println(" -- Título está em branco! Digite um título. -- ");
+                        System.out.println(" --- Título está em branco! Digite um título. --- ");
                         System.out.println(" ");
                         continue;
                     }
@@ -239,13 +239,13 @@ public class FileHandler {
                     resposta = scanner.nextLine().toUpperCase();
 
                     if (!resposta.equals("N") && !resposta.equals("S")) {
-                        System.out.println(" -- Por favor, digite apenas 'S' para Sim ou 'N' para Não");
+                        System.out.println(" --- Por favor, digite apenas 'S' para Sim ou 'N' para Não ---");
                         System.out.println(" ");
                         continue;
                     }
                     break;
                 } catch (Exception e) {
-                    System.out.println(" -- Por favor, tente novamente! -- ");
+                    System.out.println(" --- Por favor, tente novamente! --- ");
                 }
             } while (true);
 
@@ -264,7 +264,7 @@ public class FileHandler {
                         videoParaEditar = new Video(videoParaEditar.getTitulo(), novaDescricao, videoParaEditar.getDuracao(), videoParaEditar.getCategoria(), videoParaEditar.getDataPublicacao());
                         break;
                     } catch (Exception e) {
-                        System.out.println(" -- Por favor, tente novamente! --");
+                        System.out.println(" --- Por favor, tente novamente! ---");
                         System.out.println(" ");
                         continue;
                     }
@@ -286,7 +286,7 @@ public class FileHandler {
                     break;
 
                 } catch (Exception e) {
-                    System.out.println(" -- Ocorreu um erro! Tente novamente! -- ");
+                    System.out.println(" --- Ocorreu um erro! Tente novamente! --- ");
                 }
             } while (true);
 
@@ -310,7 +310,7 @@ public class FileHandler {
                         break;
 
                     } catch (Exception e) {
-                        System.out.println(" -- Por favor, digite apenas números! -- ");
+                        System.out.println(" --- Por favor, digite apenas números! --- ");
                     }
                 } while (true);
             }
@@ -328,7 +328,7 @@ public class FileHandler {
                     break;
 
                 } catch (Exception e) {
-                    System.out.println(" -- Ocorreu um erro, tente novamente! -- ");
+                    System.out.println(" --- Ocorreu um erro, tente novamente! --- ");
                 }
             } while (true);
 
@@ -349,14 +349,14 @@ public class FileHandler {
                         novaCategoriaEscolha = scanner.nextInt();
 
                         if (novaCategoriaEscolha > 6 || novaCategoriaEscolha < 1) {
-                            System.out.println(" -- Por favor, apenas números de 1 a 6! -- ");
+                            System.out.println(" --- Por favor, apenas números de 1 a 6! --- ");
                             continue;
                         }
 
 
                         break;
                     } catch (Exception e) {
-                        System.out.println(" -- Por favor, digite apenas números! -- ");
+                        System.out.println(" --- Por favor, digite apenas números! --- ");
                         System.out.println(" ");
                         scanner.nextLine();
                     }
@@ -385,7 +385,7 @@ public class FileHandler {
 
                     if (!resposta.equals("N") && !resposta.equals("S")) {
                         System.out.println(" ");
-                        System.out.println(" -- Por favor, digite apenas 'S' para Sim ou 'N' para Não");
+                        System.out.println(" --- Por favor, digite apenas 'S' para Sim ou 'N' para Não --- ");
                         System.out.println(" ");
                         continue;
                     }
@@ -393,7 +393,7 @@ public class FileHandler {
 
 
                 } catch (Exception e) {
-                    System.out.println(" -- Houve um erro! Tente novamente! -- ");
+                    System.out.println(" --- Houve um erro! Tente novamente! --- ");
                     System.out.println(" ");
 
                 }
@@ -408,14 +408,14 @@ public class FileHandler {
                     Date novaDataPublicacao = sdf.parse(novaDataStr);
                     videoParaEditar = new Video(videoParaEditar.getTitulo(), videoParaEditar.getDescricao(), videoParaEditar.getDuracao(), videoParaEditar.getCategoria(), novaDataPublicacao);
                 } catch (Exception e) {
-                    System.out.println("Formato de data inválido. Alteração ignorada.");
+                    System.out.println(" --- Formato de data inválido. Alteração ignorada. ---");
                 }
             }
 
 
             videoService.deleteVideo(videoAnteriorParaDeletar);
             videoService.addVideo(videoParaEditar);
-            System.out.println("Informações do vídeo atualizadas com sucesso!");
+            System.out.println(" --- Informações do vídeo atualizadas com sucesso! --- ");
         }
 
 
@@ -428,7 +428,7 @@ public class FileHandler {
         System.out.println(" ");
 
         if (resultados.isEmpty()) {
-            System.out.println(" -- Nenhum vídeo encontrado com o título especificado! -- ");
+            System.out.println(" --- Nenhum vídeo encontrado com o título especificado! --- ");
 
         } else if (!resultados.isEmpty()) {
             Video videoParaDeletar = resultados.get(0);
@@ -448,7 +448,7 @@ public class FileHandler {
 
 
                 }catch (Exception e) {
-                    System.out.println(" -- Por favor, S para Sim ou N para Não -- ");
+                    System.out.println(" --- Por favor, S para Sim ou N para Não --- ");
                     break;
                 }
 
