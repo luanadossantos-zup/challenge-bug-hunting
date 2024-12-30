@@ -50,7 +50,7 @@ public class FileVideoRepository implements VideoRepository {
                 bw.newLine();
             }
         } catch (IOException e) {
-            // Ignorar erros por enquanto
+            System.out.println("Erro ao deletar: " + e.getMessage);
         }
     }
 
