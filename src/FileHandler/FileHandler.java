@@ -382,7 +382,7 @@ public class FileHandler {
                     System.out.println(" ");
                     continue;
                 }
-                if (descricao.charAt(0) >= '0' && descricao.charAt(0) <= '9') {
+                if (Character.isDigit(descricao.charAt(0))) {
                     System.out.println(" --- Por favor, digite um nome válido, não números! ---");
                     System.out.println(" ");
                     continue;
