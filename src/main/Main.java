@@ -72,6 +72,7 @@ public class Main {
                 case 9:
                 //Sair
                     System.out.println("Saindo do sistema...");
+                    scanner.close();
                     System.exit(0);
 
             }
