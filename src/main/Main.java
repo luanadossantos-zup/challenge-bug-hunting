@@ -1,75 +1,83 @@
 package main;
 
-import model.Video;
+import Menu.Menu;
 import repository.FileVideoRepository;
 import service.VideoService;
 import service.VideoServiceImpl;
 import strategy.SearchStrategy;
 import strategy.TitleSearchStrategy;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
         SearchStrategy searchStrategy = new TitleSearchStrategy();
+        Menu menu = new Menu();
 
         while (true) {
-            System.out.println("\n=== Sistema de Gerenciamento de Vídeos ===");
-            System.out.println("1. Adicionar vídeo");
-            System.out.println("2. Listar vídeos");
-            System.out.println("3. Pesquisar vídeo por título");
-            System.out.println("4. Sair");
-            System.out.print("Escolha uma opção: ");
-            int opcao = scanner.nextInt();
-            scanner.nextLine(); // Consumir a quebra de linha
+            int opcao = menu.menuInicialDeEscolha(scanner);
 
-            if (opcao == 1) {
-                System.out.print("Digite o título do vídeo: ");
-                String titulo = scanner.nextLine();
-                System.out.print("Digite a descrição do vídeo: ");
-                String descricao = scanner.nextLine();
-                System.out.print("Digite a duração do vídeo (em minutos): ");
-                int duracao = scanner.nextInt();
-                scanner.nextLine(); // Consumir a quebra de linha
-                System.out.print("Digite a categoria do vídeo: ");
-                String categoria = scanner.nextLine();
-                System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
-                String dataStr = scanner.nextLine();
+            switch (opcao) {
 
-                try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                    Date dataPublicacao = sdf.parse(dataStr);
-                    Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
-                    videoService.addVideo(video);
-                    System.out.println("Vídeo adicionado com sucesso!");
-                } catch (Exception e) {
-                    System.out.println("Erro ao adicionar vídeo.");
-                }
-            } else if (opcao == 2) {
-                List<Video> videos = videoService.listVideos();
-                for (Video video : videos) {
-                    System.out.println(video);
-                }
-            } else if (opcao == 3) {
-                System.out.print("Digite o título para busca: ");
-                String query = scanner.nextLine();
-                List<Video> resultados = searchStrategy.search(videoService.listVideos(), query);
-                for (Video video : resultados) {
-                    System.out.println(video);
-                }
-            } else if (opcao == 4) {
-                System.out.println("Saindo do sistema...");
+                case 1:
+                //Adicionar video
+                    menu.adicionarVideo(scanner, videoService);
+
                 break;
-            } else {
-                System.out.println("Opção inválida.");
+
+                case 2:
+                //Listar vídeos
+                    menu.listarVideos(videoService);
+                    break;
+
+                case 3:
+                //Pesquisar vídeo por título
+                    menu.pesquisarVideoPorTitulo(scanner, searchStrategy, videoService);
+                    break;
+
+                case 4:
+                //Editar vídeo
+                // Permitir que o usuário edite as informações de um vídeo existente.
+                    menu.editarVideo(scanner,searchStrategy,videoService);
+                    break;
+
+                case 5:
+                //Excluir vídeo
+                //Adicionar a opção de remover um vídeo do sistema.
+                    menu.excluirVideo(scanner,searchStrategy,videoService);
+                    break;
+
+                case 6:
+                //Filtrar vídeos por categoria
+                //Listar apenas os vídeos de uma categoria específica
+                    menu.filtrarVideosPorCategoria(scanner,videoService);
+                    break;
+
+                case 7:
+                //Ordenar vídeos por data de publicação
+                //Listar os vídeos em ordem cronológica
+                    menu.ordenarVideosPorDataDePublicacao(videoService);
+                    break;
+
+                case 8:
+                //Exibir relatório de estatísticas
+                //Número total de vídeos.
+                //Duração total de todos os vídeos.
+                //Quantidade de vídeos por categoria.
+                    menu.relatorioDeEstatisticas(videoService);
+                    break;
+
+                case 9:
+                //Sair
+                    System.out.println("Saindo do sistema...");
+                    scanner.close();
+                    System.exit(0);
+
             }
+
         }
 
-        scanner.close();
     }
 }

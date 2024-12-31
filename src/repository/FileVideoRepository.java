@@ -19,7 +19,7 @@ public class FileVideoRepository implements VideoRepository {
             bw.write(video.toString());
             bw.newLine();
         } catch (IOException e) {
-            // Ignorar erros por enquanto
+            System.out.println("Erro ao salvar: " + e.getMessage());
         }
     }
 
@@ -35,8 +35,24 @@ public class FileVideoRepository implements VideoRepository {
                 }
             }
         } catch (IOException e) {
-            // Ignorar erros por enquanto
+            System.out.println("Erro ao buscar video: " + e.getMessage());
         }
         return videos;
     }
+
+    @Override
+    public void delete(Video video) {
+        List<Video> videos = findAll();
+        videos.removeIf(v -> v.getTitulo().equals(video.getTitulo()));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            for (Video v : videos) {
+                bw.write(v.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao deletar: " + e.getMessage());
+        }
+    }
+
+
 }

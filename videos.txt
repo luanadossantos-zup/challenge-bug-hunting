@@ -1,0 +1,6 @@
+A Espera de Um Milagre;Filme longo;123;Filme; 07/03/1999
+The Good Place;Serie de comedia;300;Série; 20/03/2017
+Test;Desc;27;Curta-metragem; 26/12/2024
+Lost;Mistério;604;Série; 04/05/2004
+
+Totoro;Teste;83;Filme;17/10/1988
